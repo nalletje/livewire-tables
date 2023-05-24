@@ -1,0 +1,39 @@
+{
+    "name": "nalletje/livewire-tables",
+    "description": "Addition to livewire",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "livewire",
+        "table",
+        "nalletje"
+    ],
+    "authors": [
+        {
+            "name": "Quirinus de Munnik",
+            "email": "quirinus@q-online.eu"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "livewire/livewire": "^2.12",
+        "illuminate/auth": "^10.0",
+        "illuminate/container": "^10.0",
+        "illuminate/contracts": "^10.0",
+        "illuminate/database": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nalletje\\LivewireTables\\": "src/"
+        }
+    },
+    "minimum-stability" : "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nalletje\\LivewireTables\\ServiceProvider"
+            ]
+        }
+    }
+}
