@@ -1,6 +1,7 @@
 <?php
 namespace Nalletje\LivewireTables\Builders;
 
+use ErrorException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -10,6 +11,7 @@ class Column
     public bool $sortable = true;
     public bool $searchable = true;
     public ?string $sortField = null;
+    public mixed $transformer = null;
 
     public function __construct(public string $field, public ?string $label = null) {}
 
@@ -50,6 +52,10 @@ class Column
             $val = $model->$field;
         }
 
+        if ($this->hasTransformer()) {
+            return $this->getTransformer($val);
+        }
+
         if ($this->hasButtons()) {
             return $this->getButtons($val);
         }
@@ -57,9 +63,24 @@ class Column
         return $val;
     }
 
+    public function getTransformer(mixed $val): mixed
+    {
+        if (is_callable($this->transformer)) {
+            $fnc = $this->transformer;
+            return $fnc($val);
+        }
+
+        return Str::replace("{val}", $val, $this->transformer);
+    }
+
     public function hasButtons(): bool
     {
         return ! empty($this->buttons);
+    }
+
+    public function hasTransformer(): bool
+    {
+        return ! is_null($this->transformer);
     }
 
     public function label(string $label): self
@@ -106,5 +127,19 @@ class Column
     public function isSearchable(): bool
     {
         return $this->searchable;
+    }
+
+    /**
+     * @throws ErrorException
+     */
+    public function transform(callable|string $transformTo): self
+    {
+        if (is_string($transformTo) && Str::contains($transformTo, "{val}") === false) {
+            throw new ErrorException("{val} is not set in transform function for column: $this->label");
+        }
+
+        $this->transformer = $transformTo;
+
+        return $this;
     }
 }

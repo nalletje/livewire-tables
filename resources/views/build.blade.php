@@ -1,7 +1,5 @@
 <div>
-
     <div class="row">
-
         <div class="col-md-12 mb-3">
             <div class="card">
                 <div class="card-body">
@@ -93,11 +91,7 @@
                                             </td>
                                         @endif
 
-                                        @foreach($columns as $column)
-                                            <td>
-                                                {!! $column->getTableValue($row) !!}
-                                            </td>
-                                        @endforeach
+                                        @include("nalletje_livewiretables::partials.table-row", compact('columns'))
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -113,7 +107,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>

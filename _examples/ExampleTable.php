@@ -59,7 +59,11 @@ class ExampleTable extends LivewireTableComponent
     {
         return [
             Column::make('relation.field', "Label"),
-            Column::make('field', trans('Label')),
+            Column::make('field', trans('Label'))
+                // use the transform field if you want to manipulate the
+                ->transform(static function ($val) {
+                    return number_format($val, 0, ',', '.')."%";
+                }),
 
             Column::make('id', "")
                 ->sortable(false)
