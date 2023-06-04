@@ -38,6 +38,8 @@ class LivewireTableComponent extends Component
             'show_filters' => $this->hasFilters() ? $this->show_filters : false,
             'sort_field' => $this->sort_field,
             'sort_dir' => $this->sort_dir,
+            'selected_rows' => $this->hasActions() ? count($this->collected) : 0,
+            'selected_pages' => $this->hasActions() ? $this->collected_pages : [],
             'with_actions' => $this->hasActions(),
             'with_buttons' => $this->hasButtons(),
             'with_filters' => $this->hasFilters(),

@@ -7,6 +7,24 @@ trait WithActions
 {
     public ?string $action = '';
     public array $collected = [];
+    public array $collected_pages = [];
+
+    public function addCollected(int $page, string $keys): void
+    {
+        $keys = json_decode($keys, true);
+        $keys = array_map(fn ($v) => (string)$v, $keys);
+
+        if (in_array($page, $this->collected_pages)) {
+            $this->collected_pages = array_filter($this->collected_pages, fn ($val) => $val != $page);
+            $this->collected = array_filter($this->collected, fn ($val) => !in_array($val, $keys));
+            return;
+        }
+
+        $this->collected_pages[] = $page;
+        $this->collected = array_unique(
+            array_merge($keys, $this->collected)
+        );
+    }
 
     public function updatedAction(): void
     {

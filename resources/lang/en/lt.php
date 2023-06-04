@@ -12,4 +12,6 @@ return [
 
     'filters_hide' => 'Hide filters',
     'filters_show' => 'Show filters',
+
+    'rows_selected' => 'Rows selected',
 ];

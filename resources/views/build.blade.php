@@ -59,7 +59,14 @@
                                 <thead>
                                 <tr>
                                     @if ($with_actions)
-                                        <th style="width:32px">-</th>
+                                        <th style="width:32px">
+                                            <input type="checkbox"
+                                                   class="form-check"
+                                                   wire:click="addCollected({{ $data->currentPage() }}, $event.target.value)"
+                                                   value="{!! json_encode($data->pluck($data->first()->getKeyName())) !!}"
+                                                   @if(in_array($data->currentPage(), $selected_pages)) checked @endif
+                                            />
+                                        </th>
                                     @endif
                                     @foreach($columns as $i => $column)
                                         <th
@@ -97,10 +104,17 @@
                                 </tbody>
                             </table>
                         </div>
-
                         <div class="row">
-                            <div class="col-4 offset-5">
+                            <div class="col-5">
+                                @if ($with_actions && $selected_rows > 0)
+                                    <span><b>{{ $selected_rows }}</b> {{ trans('nalletje_livewiretables::lt.rows_selected') }}</span>
+                                @endif
+                            </div>
+                            <div class="col-4">
                                 {{ $data->links() }}
+                            </div>
+                            <div class="col-3">
+
                             </div>
                         </div>
                     @endif
