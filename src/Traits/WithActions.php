@@ -15,8 +15,8 @@ trait WithActions
         $keys = array_map(fn ($v) => (string)$v, $keys);
 
         if (in_array($page, $this->collected_pages)) {
-            $this->collected_pages = array_filter($this->collected_pages, fn ($val) => $val != $page);
-            $this->collected = array_filter($this->collected, fn ($val) => !in_array($val, $keys));
+            $this->filterPage($page);
+            $this->filterCollected($keys);
             return;
         }
 
@@ -24,6 +24,17 @@ trait WithActions
         $this->collected = array_unique(
             array_merge($keys, $this->collected)
         );
+    }
+
+    public function toggleCollected(int $page, string $key): void
+    {
+        if (in_array($key, $this->collected)) {
+            $this->filterPage($page);
+            $this->filterCollected([$key]);
+            return;
+        }
+
+        $this->collected[] = $key;
     }
 
     public function updatedAction(): void
@@ -46,6 +57,15 @@ trait WithActions
         return $this->baseQuery()
             ->whereIn("$table.$field", $this->collected)
             ->get();
+    }
 
+    protected function filterCollected(array $keys): void
+    {
+        $this->collected = array_filter($this->collected, fn ($val) => !in_array($val, $keys));
+    }
+
+    protected function filterPage($page): void
+    {
+        $this->collected_pages = array_filter($this->collected_pages, fn ($val) => $val != $page);
     }
 }

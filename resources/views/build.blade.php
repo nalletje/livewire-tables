@@ -94,7 +94,12 @@
                                     <tr>
                                         @if ($with_actions)
                                             <td>
-                                                <input type="checkbox" class="form-check" wire:model="collected" value="{{ $row->getKey() }}" />
+                                                <input type="checkbox"
+                                                       class="form-check"
+                                                       wire:change="toggleCollected({{ $data->currentPage() }}, $event.target.value)"
+                                                       value="{{ $row->getKey() }}"
+                                                       @if (in_array($row->getKey(), $selected_rows)) checked @endif
+                                                />
                                             </td>
                                         @endif
 
@@ -107,7 +112,7 @@
                         <div class="row">
                             <div class="col-5">
                                 @if ($with_actions && $selected_rows > 0)
-                                    <span><b>{{ $selected_rows }}</b> {{ trans('nalletje_livewiretables::lt.rows_selected') }}</span>
+                                    <span><b>{{ count($selected_rows) }}</b> {{ trans('nalletje_livewiretables::lt.rows_selected') }}</span>
                                 @endif
                             </div>
                             <div class="col-4">
