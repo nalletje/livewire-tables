@@ -3,7 +3,7 @@
         <div class="col-md-12 mb-3">
             <div class="card">
                 <div class="card-body">
-                    @includeWhen($message, 'nalletje_livewiretables::partials.messages.info')
+                    @includeWhen($message, 'nalletje_livewiretables::partials.messages.'.$message_type)
 
                     @if ($with_filters && $show_filters)
                         <div class="d-md-flex align-items-baseline gap-1">
@@ -90,4 +90,6 @@
             </div>
         </div>
     </div>
+
+{{--    @includeWhen($with_actions, "nalletje_livewiretables::partials.actions.form-modal")--}}
 </div>

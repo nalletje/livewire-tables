@@ -12,17 +12,16 @@ use Nalletje\LivewireTables\Traits\WithButtons;
 use Nalletje\LivewireTables\Traits\WithColumns;
 use Nalletje\LivewireTables\Traits\WithData;
 use Nalletje\LivewireTables\Traits\WithFilters;
+use Nalletje\LivewireTables\Traits\WithMessages;
 use Nalletje\LivewireTables\Traits\WithModel;
 use Nalletje\LivewireTables\Traits\WithSearch;
 use Nalletje\LivewireTables\Traits\WithSort;
 
 class LivewireTableComponent extends Component
 {
-    use WithColumns, WithData, WithModel, WithSort;
+    use WithColumns, WithData, WithModel, WithSort, WithMessages;
 
     public bool $loader = true;
-
-    public ?string $message = null;
 
     public int $page_limit = 20;
 
@@ -38,6 +37,7 @@ class LivewireTableComponent extends Component
             'data' => $this->getData(),
             'loader' => $this->loader,
             'message' => $this->message,
+            'message_type' => $this->message_type,
             'show_filters' => $this->hasFilters() ? $this->show_filters : false,
             'sort_field' => $this->sort_field,
             'sort_dir' => $this->sort_dir,
@@ -83,7 +83,7 @@ class LivewireTableComponent extends Component
     public function resetLivewireTablePage(): void
     {
         if ($this->hasActions()) {
-            $this->collected = [];
+            $this->collected = $this->collected_pages = [];
         }
 
         $this->resetPage();

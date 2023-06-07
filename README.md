@@ -25,11 +25,11 @@ Can't get it to work or found a problem? Feel free to ask.
 - Actions for one or more selected rows
 - (Query) Filters
 - Route buttons
+- transform column result
 
 # What will the future bring
 I don't have a schedule or a deadline at this time, i use this package for some (personal) projects.
 While developing this projects i will extend features on the "need" base.
 I could see features like:
-- Controlling the row fields by your own blade file
 - Filters: Select2 library usage
 - Filters: Option search
