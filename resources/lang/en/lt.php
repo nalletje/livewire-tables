@@ -2,8 +2,9 @@
 
 return [
     'fields' => [
-        'action' => 'What action?',
+        'action' => 'Select action to execute',
         'search' => 'Search',
+        'loading' => 'Loading',
     ],
     'words' => [
         'filters' => 'Filters',

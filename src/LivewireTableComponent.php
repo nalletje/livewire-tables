@@ -20,6 +20,8 @@ class LivewireTableComponent extends Component
 {
     use WithColumns, WithData, WithModel, WithSort;
 
+    public bool $loader = true;
+
     public ?string $message = null;
 
     public int $page_limit = 20;
@@ -34,6 +36,7 @@ class LivewireTableComponent extends Component
             'buttons' => $this->hasButtons() ? $this->buttons() : [],
             'filters' => $this->hasFilters() ? $this->getFilters() : [],
             'data' => $this->getData(),
+            'loader' => $this->loader,
             'message' => $this->message,
             'show_filters' => $this->hasFilters() ? $this->show_filters : false,
             'sort_field' => $this->sort_field,
