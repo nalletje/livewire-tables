@@ -32,6 +32,9 @@ class LivewireTableComponent extends Component
         return view('nalletje_livewiretables::build', [
             'columns' => $this->getColumns(),
             'actions' => $this->hasActions() ? $this->actions() : [],
+            'action_with_form' => $this->hasActions() && $this->actionWithForm
+                ? $this->actions()[$this->actionWithForm]
+                : null,
             'buttons' => $this->hasButtons() ? $this->buttons() : [],
             'filters' => $this->hasFilters() ? $this->getFilters() : [],
             'data' => $this->getData(),

@@ -1,17 +1,23 @@
 <div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.3);">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+    <form wire:submit.prevent="executeAction(Object.fromEntries(new FormData($event.target)))">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ trans('nalletje_livewiretables::lt.words.execute') }} "{{ $action_with_form->label() }}"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @includeWhen($message, 'nalletje_livewiretables::partials.messages.'.$message_type)
+
+                    @foreach($action_with_form->fields() as $field)
+                        {!! $field->build() !!}
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="closeActionModal">{{ trans('nalletje_livewiretables::lt.words.close') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ trans('nalletje_livewiretables::lt.words.execute') }}</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

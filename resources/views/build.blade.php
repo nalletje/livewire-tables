@@ -91,5 +91,5 @@
         </div>
     </div>
 
-{{--    @includeWhen($with_actions, "nalletje_livewiretables::partials.actions.form-modal")--}}
+    @includeWhen($with_actions && $action_with_form, "nalletje_livewiretables::partials.actions.form-modal")
 </div>

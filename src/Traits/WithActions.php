@@ -2,10 +2,12 @@
 namespace Nalletje\LivewireTables\Traits;
 
 use Illuminate\Support\Collection;
+use Nalletje\LivewireTables\Contracts\ActionWithFormInterface;
 
 trait WithActions
 {
     public ?string $action = '';
+    public ?string $actionWithForm = null;
     public array $collected = [];
     public array $collected_pages = [];
 
@@ -40,13 +42,56 @@ trait WithActions
     public function updatedAction(): void
     {
         if (isset($this->actions()[$this->action])) {
-            $collection = $this->getDataCollection();
-            $this->message = $this->actions()[$this->action]->handle($collection);
+            $action = $this->actions()[$this->action];
+
+            if ($action instanceof ActionWithFormInterface) {
+                $this->actionWithForm = $this->action;
+                return;
+            }
+
+            $messageObject = $action->handle(
+                $this->getDataCollection()
+            );
+
+            $this->message = $messageObject->message();
+            $this->message_type = $messageObject->type();
         }
 
         $this->action = '';
         $this->collected = [];
         $this->resetLivewireTablePage();
+    }
+
+    public function closeActionModal(): void
+    {
+        $this->action = '';
+        $this->actionWithForm = null;
+    }
+
+    public function executeAction(array $formData): void
+    {
+        $this->clearMessages();
+
+        $data = $this->getDataCollection();
+        $action = $this->actions()[$this->actionWithForm];
+
+        $validatedData = $action->validate($formData);
+
+        if ($validatedData['errors']) {
+            $this->setErrorMessage(trans('nalletje_livewiretables::lt.forms.validation_error', [
+                'errors' => $validatedData['errors_html']
+            ]));
+            return;
+        }
+
+        $messageObject = $action->handle($data, $validatedData);
+
+        $this->message = $messageObject->message();
+        $this->message_type = $messageObject->type();
+
+        $this->closeActionModal();
+        $this->collected = [];
+        $this->collected_pages = [];
     }
 
     protected function getDataCollection(): Collection

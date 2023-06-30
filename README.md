@@ -23,6 +23,7 @@ Can't get it to work or found a problem? Feel free to ask.
 - Build tables based on queries (and relations)
 - Data search (query)
 - Actions for one or more selected rows
+- Actions with form
 - (Query) Filters
 - Route buttons
 - transform column result
@@ -33,3 +34,7 @@ While developing this projects i will extend features on the "need" base.
 I could see features like:
 - Filters: Select2 library usage
 - Filters: Option search
+
+# Upgrading to 0.1.0
+There are breaking changes for Actions, the handle function returns a Message object now instead of a string
+See examples.
