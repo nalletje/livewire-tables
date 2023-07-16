@@ -14,11 +14,7 @@
                     @endif
 
                     <div class="d-md-flex align-items-baseline mt-3">
-                        @if ($with_buttons && count($buttons))
-                            @foreach($buttons as $button)
-                                @include('nalletje_livewiretables::partials.button', compact('button'))
-                            @endforeach
-                        @endif
+                        @include('nalletje_livewiretables::partials.buttons')
 
                         <div class="d-flex align-items-center gap-1 text-nowrap ms-auto mb-3">
                             @includeWhen($with_search, 'nalletje_livewiretables::partials.search')
@@ -92,4 +88,5 @@
     </div>
 
     @includeWhen($with_actions && $action_with_form, "nalletje_livewiretables::partials.actions.form-modal")
+    @includeWhen($with_buttons && $button_with_form, "nalletje_livewiretables::partials.buttons.form-modal")
 </div>
