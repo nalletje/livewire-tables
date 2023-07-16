@@ -27,7 +27,7 @@ trait WithFilters
 
     public function getFilters(): array
     {
-        $filters = $this->filters();
+        $filters = array_filter($this->filters(), fn($f) => $f->auth());
 
         foreach($this->filter_values as $key => $val) {
             $filters[$key]->setValue($val);

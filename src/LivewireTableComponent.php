@@ -31,11 +31,11 @@ class LivewireTableComponent extends Component
     {
         return view('nalletje_livewiretables::build', [
             'columns' => $this->getColumns(),
-            'actions' => $this->hasActions() ? $this->actions() : [],
+            'actions' => $this->hasActions() ? $this->getActions() : [],
             'action_with_form' => $this->hasActions() && $this->actionWithForm
                 ? $this->actions()[$this->actionWithForm]
                 : null,
-            'buttons' => $this->hasButtons() ? $this->buttons() : [],
+            'buttons' => $this->hasButtons() ? $this->getButtons() : [],
             'filters' => $this->hasFilters() ? $this->getFilters() : [],
             'data' => $this->getData(),
             'loader' => $this->loader,
@@ -55,17 +55,17 @@ class LivewireTableComponent extends Component
 
     public function hasActions(): bool
     {
-        return in_array(WithActions::class, class_uses($this));
+        return in_array(WithActions::class, class_uses($this)) && !empty($this->getActions());
     }
 
     public function hasButtons(): bool
     {
-        return in_array(WithButtons::class, class_uses($this));
+        return in_array(WithButtons::class, class_uses($this)) && !empty($this->getButtons());
     }
 
     public function hasFilters(): bool
     {
-        return in_array(WithFilters::class, class_uses($this));
+        return in_array(WithFilters::class, class_uses($this)) && !empty($this->getFilters());
     }
 
     public function hasSearch(): bool

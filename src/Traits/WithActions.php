@@ -28,6 +28,11 @@ trait WithActions
         );
     }
 
+    public function getActions(): array
+    {
+        return array_filter($this->actions(), fn($a) => $a->auth());
+    }
+
     public function toggleCollected(int $page, string $key): void
     {
         if (in_array($key, $this->collected)) {
