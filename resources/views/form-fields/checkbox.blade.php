@@ -4,7 +4,7 @@
            id="lt-{{ $name }}"
            name="{{ $name }}"
            value="1"
-           @if(old($name, 0) === 1) checked @endif">
+           @if(old($name, 0) === 1) checked @endif>
     <label class="form-check-label" for="lt-{{ $name }}">
         {{ $label }}
     </label>

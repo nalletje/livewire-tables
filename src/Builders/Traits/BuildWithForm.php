@@ -32,7 +32,7 @@ trait BuildWithForm
 
         return [
             'errors' => false,
-            'data' => $validator->validated(),
+            'data' => $formData,
         ];
     }
 
