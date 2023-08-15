@@ -14,7 +14,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" wire:click="closeActionModal">{{ trans('nalletje_livewiretables::lt.words.close') }}</button>
+                    <button type="button" class="btn btn-secondary" wire:click="closeButtonModal">{{ trans('nalletje_livewiretables::lt.words.close') }}</button>
                     <button type="submit" class="btn btn-primary">{{ trans('nalletje_livewiretables::lt.words.execute') }}</button>
                 </div>
             </div>
