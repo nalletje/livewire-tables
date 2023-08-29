@@ -7,7 +7,7 @@ This is a home project; You're welcome to use it.
 # Requirements
 - PHP 8.2
 - Laravel 10 or higher
-- Livewire 2.12 or higher
+- Livewire 3.0.0 or higher
 - Bootstrap 5
 - (Optional) Spatie permissions
 - (Optional) Font awesome

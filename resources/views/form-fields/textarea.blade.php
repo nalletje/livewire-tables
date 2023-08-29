@@ -4,6 +4,7 @@
            class="form-control {{ $classes }} @error($name) is-invalid @enderror"
            id="lt-{{ $name }}"
            name="{{ $name }}"
+           wire:model="form.{{ $name }}"
            placeholder="{{ $placeholder }}"
            rows="{{ $rows }}"
     >{{ old($name) }}</textarea>

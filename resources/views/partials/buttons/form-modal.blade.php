@@ -1,5 +1,5 @@
 <div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.3);">
-    <form wire:submit.prevent="executeButton(Object.fromEntries(new FormData($event.target)))">
+    <form wire:submit.prevent="executeButton()">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">

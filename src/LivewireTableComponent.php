@@ -12,6 +12,7 @@ use Nalletje\LivewireTables\Traits\WithButtons;
 use Nalletje\LivewireTables\Traits\WithColumns;
 use Nalletje\LivewireTables\Traits\WithData;
 use Nalletje\LivewireTables\Traits\WithFilters;
+use Nalletje\LivewireTables\Traits\WithFormData;
 use Nalletje\LivewireTables\Traits\WithMessages;
 use Nalletje\LivewireTables\Traits\WithModel;
 use Nalletje\LivewireTables\Traits\WithSearch;
@@ -19,7 +20,7 @@ use Nalletje\LivewireTables\Traits\WithSort;
 
 class LivewireTableComponent extends Component
 {
-    use WithColumns, WithData, WithModel, WithSort, WithMessages;
+    use WithColumns, WithData, WithFormData, WithModel, WithSort, WithMessages;
 
     public bool $loader = true;
 

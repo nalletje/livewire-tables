@@ -3,6 +3,7 @@
     <select class="form-select {{ $classes }} @error($name) is-invalid @enderror"
            id="lt-{{ $name }}"
            name="{{ $name }}"
+           wire:model="form.{{ $name }}"
            placeholder="{{ $placeholder ?? '' }}"
            value="{{ old($name) }}"
     >

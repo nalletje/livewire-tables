@@ -24,12 +24,12 @@ trait WithButtons
         $this->buttonWithForm = null;
     }
 
-    public function executeButton(array $formData): void
+    public function executeButton(): void
     {
         $this->clearMessages();
 
         $button = $this->buttons()[$this->buttonWithForm];
-        $validatedData = $button->validate($formData);
+        $validatedData = $button->validate($this->form);
 
         if ($validatedData['errors']) {
             $this->setErrorMessage(trans('nalletje_livewiretables::lt.forms.validation_error', [

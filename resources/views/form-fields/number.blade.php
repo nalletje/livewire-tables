@@ -3,6 +3,7 @@
     <input type="number"
            class="form-control {{ $classes }} @error($name) is-invalid @enderror"
            id="lt-{{ $name }}"
+           wire:model="form.{{ $name }}"
            name="{{ $name }}"
            placeholder="{{ $placeholder ?? '' }}"
            step="{{ $steps }}"

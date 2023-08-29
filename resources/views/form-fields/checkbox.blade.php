@@ -2,6 +2,7 @@
     <input class="form-check-input {{ $classes }} @error($name) is-invalid @enderror"
            type="checkbox"
            id="lt-{{ $name }}"
+           wire:model="form.{{ $name }}"
            name="{{ $name }}"
            value="1"
            @if(old($name, 0) === 1) checked @endif>

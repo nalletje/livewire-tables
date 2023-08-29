@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "livewire/livewire": "^2.12|^v3.0.0",
+        "livewire/livewire": "^v3.0.0",
         "illuminate/auth": "^10.0",
         "illuminate/container": "^10.0",
         "illuminate/contracts": "^10.0",

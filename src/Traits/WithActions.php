@@ -73,14 +73,14 @@ trait WithActions
         $this->actionWithForm = null;
     }
 
-    public function executeAction(array $formData): void
+    public function executeAction(): void
     {
         $this->clearMessages();
 
         $data = $this->getDataCollection();
         $action = $this->actions()[$this->actionWithForm];
 
-        $validatedData = $action->validate($formData);
+        $validatedData = $action->validate($this->form);
 
         if ($validatedData['errors']) {
             $this->setErrorMessage(trans('nalletje_livewiretables::lt.forms.validation_error', [

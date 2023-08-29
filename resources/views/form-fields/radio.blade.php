@@ -5,6 +5,7 @@
         <div class="form-check">
             <input class="form-check-input  {{ $classes }} @error($name) is-invalid @enderror" type="radio"
                    name="{{ $name }}"
+                   wire:model="form.{{ $name }}"
                    id="lt-{{ $name }}-{{$val}}"
                    value="{{ $val }}"
                    @if(old($name, 0) === $val) checked @endif
