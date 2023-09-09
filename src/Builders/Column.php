@@ -12,6 +12,8 @@ class Column
     public bool $searchable = true;
     public ?string $sortField = null;
     public mixed $transformer = null;
+    public ?array $routeParams = null;
+    public ?string $replaceRouteParamkey = null;
 
     public function __construct(public string $field, public ?string $label = null) {}
 
@@ -26,6 +28,14 @@ class Column
             'buttons' => $this->buttons,
             'routeParam' => $routeParam
         ])->render();
+    }
+
+    private function getRouteParams(mixed $val): array
+    {
+        $routeParams = $this->routeParams;
+        $routeParams[$this->replaceRouteParamkey] = $val;
+
+        return $routeParams;
     }
 
     public function getLabel(): string
@@ -57,6 +67,12 @@ class Column
         }
 
         if ($this->hasButtons()) {
+            if ($this->hasRouteParams()) {
+                return $this->getButtons(
+                    $this->getRouteParams($val)
+                );
+            }
+
             return $this->getButtons($val);
         }
 
@@ -81,6 +97,11 @@ class Column
     public function hasTransformer(): bool
     {
         return ! is_null($this->transformer);
+    }
+
+    public function hasRouteParams(): bool
+    {
+        return ! is_null($this->routeParams);
     }
 
     public function label(string $label): self
@@ -139,6 +160,21 @@ class Column
         }
 
         $this->transformer = $transformTo;
+
+        return $this;
+    }
+
+    public function routeparams(array $routeParams, string $replaceKey): self
+    {
+        if (is_array($routeParams) === false) {
+            throw new ErrorException("routeparams should be an array");
+        }
+        if (array_key_exists($replaceKey, $routeParams) === false) {
+            throw new ErrorException("replaceKey is not found in routeparam array");
+        }
+
+        $this->routeParams = $routeParams;
+        $this->replaceRouteParamkey = $replaceKey;
 
         return $this;
     }
