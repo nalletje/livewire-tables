@@ -166,9 +166,6 @@ class Column
 
     public function routeparams(array $routeParams, string $replaceKey): self
     {
-        if (is_array($routeParams) === false) {
-            throw new ErrorException("routeparams should be an array");
-        }
         if (array_key_exists($replaceKey, $routeParams) === false) {
             throw new ErrorException("replaceKey is not found in routeparam array");
         }
