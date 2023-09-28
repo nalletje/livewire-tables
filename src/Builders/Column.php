@@ -63,7 +63,7 @@ class Column
         }
 
         if ($this->hasTransformer()) {
-            return $this->getTransformer($val);
+            return $this->getTransformer($val, $model);
         }
 
         if ($this->hasButtons()) {
@@ -79,11 +79,11 @@ class Column
         return $val;
     }
 
-    public function getTransformer(mixed $val): mixed
+    public function getTransformer(mixed $val, Model $model): mixed
     {
         if (is_callable($this->transformer)) {
             $fnc = $this->transformer;
-            return $fnc($val);
+            return $fnc($val, $model);
         }
 
         return Str::replace("{val}", $val, $this->transformer);
