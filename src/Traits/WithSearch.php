@@ -1,15 +1,13 @@
 <?php
 namespace Nalletje\LivewireTables\Traits;
 
+use Livewire\Attributes\Url;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 trait WithSearch
 {
-    protected array $queryStringWithSearch = [
-        'search',
-    ];
-
+    #[Url]
     public ?string $search = null;
 
     public function updatingSearch(): void

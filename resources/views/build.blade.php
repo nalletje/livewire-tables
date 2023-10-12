@@ -5,21 +5,13 @@
                 <div class="card-body">
                     @includeWhen($message, 'nalletje_livewiretables::partials.messages.'.$message_type)
 
-                    @if ($with_filters && $show_filters)
-                        <div class="d-md-flex align-items-baseline gap-1">
-                        @foreach($filters as $filterKey => $filter)
-                            @include('nalletje_livewiretables::partials.filters.select', compact('filter', 'filterKey'))
-                        @endforeach
-                        </div>
-                    @endif
-
                     <div class="d-md-flex align-items-baseline mt-3">
                         @include('nalletje_livewiretables::partials.buttons')
 
                         <div class="d-flex align-items-center gap-1 text-nowrap ms-auto mb-3">
                             @includeWhen($with_search, 'nalletje_livewiretables::partials.search')
                             @includeWhen($with_actions && count($selected_rows), 'nalletje_livewiretables::partials.actions')
-                            @includeWhen($with_filters, 'nalletje_livewiretables::partials.filters.show-hide')
+                            @include('nalletje_livewiretables::partials.settings')
                         </div>
                     </div>
 
@@ -39,7 +31,7 @@
                                             @foreach($columns as $i => $column)
                                                 <th
                                                     @if($column->isSortable())
-                                                        class="pointer"
+                                                        class="nlt-pointer"
                                                         wire:click="setColumnSort('{{ $column->getField() }}')"
                                                     @endif
                                                 >
@@ -67,17 +59,27 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row">
-                                    <div class="col-5">
-                                        @if ($with_actions && count($selected_rows) > 0)
-                                            <span><b>{{ count($selected_rows) }}</b> {{ trans('nalletje_livewiretables::lt.rows_selected') }}</span>
-                                        @endif
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <p class="nlt-total-rows">
+                                            @if ($with_actions && count($selected_rows) > 0)
+                                                {!! trans('nalletje_livewiretables::lt.total-selected-results', [
+                                                    'selected' => count($selected_rows),
+                                                    'from' => $data->firstItem(),
+                                                    'to' => $data->lastItem(),
+                                                    'total' => $data->total()
+                                                ]) !!}
+                                            @else
+                                                {!! trans('nalletje_livewiretables::lt.total-results', [
+                                                    'from' => $data->firstItem(),
+                                                    'to' => $data->lastItem(),
+                                                    'total' => $data->total()
+                                                ]) !!}
+                                            @endif
+                                        </p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6 nlt-pagination">
                                         {{ $data->links() }}
-                                    </div>
-                                    <div class="col-3">
-
                                     </div>
                                 </div>
                             @endif
@@ -109,6 +111,17 @@
             padding: 32px;
             background-color: white;
             border: 1px solid #F0EEEE;
+        }
+        .nlt-pointer {
+            cursor: pointer;
+        }
+        .nlt-pagination {
+            float:right;
+        }
+        .nlt-total-rows {
+            margin-top:11px;
+            font-size: 0.9em;
+            font-style: italic;
         }
     </style>
 </div>

@@ -42,7 +42,7 @@ trait WithData
         $query = $this->baseQuery();
 
         return $this->hasPagination()
-            ? $query->paginate($this->page_limit)
+            ? $query->paginate($this->perPage)
             : $query->get();
     }
 

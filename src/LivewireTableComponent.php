@@ -5,6 +5,7 @@ use Illuminate\Contracts\Foundation\Application as FoundationApplication;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Nalletje\LivewireTables\Traits\WithActions;
@@ -15,16 +16,15 @@ use Nalletje\LivewireTables\Traits\WithFilters;
 use Nalletje\LivewireTables\Traits\WithFormData;
 use Nalletje\LivewireTables\Traits\WithMessages;
 use Nalletje\LivewireTables\Traits\WithModel;
+use Nalletje\LivewireTables\Traits\WithPerPage;
 use Nalletje\LivewireTables\Traits\WithSearch;
 use Nalletje\LivewireTables\Traits\WithSort;
 
 class LivewireTableComponent extends Component
 {
-    use WithColumns, WithData, WithFormData, WithModel, WithSort, WithMessages;
+    use WithColumns, WithData, WithFormData, WithModel, WithPerPage, WithSort, WithMessages;
 
     public bool $loader = true;
-
-    public int $page_limit = 20;
 
     protected string $paginationTheme = 'bootstrap';
 
@@ -43,6 +43,7 @@ class LivewireTableComponent extends Component
             'filters' => $this->hasFilters() ? $this->getFilters() : [],
             'data' => $this->getData(),
             'loader' => $this->loader,
+            'per_page_options' => $this->perPageOptions,
             'message' => $this->message,
             'message_type' => $this->message_type,
             'show_filters' => $this->hasFilters() ? $this->show_filters : false,
