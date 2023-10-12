@@ -10,7 +10,7 @@
 
                         <div class="d-flex align-items-center gap-1 text-nowrap ms-auto mb-3">
                             @includeWhen($with_search, 'nalletje_livewiretables::partials.search')
-                            @includeWhen($with_actions && count($selected_rows), 'nalletje_livewiretables::partials.actions')
+                            @includeWhen($with_actions && count($selected), 'nalletje_livewiretables::partials.actions')
                             @include('nalletje_livewiretables::partials.settings')
                         </div>
                     </div>
@@ -62,9 +62,9 @@
                                 <div class="row mt-2">
                                     <div class="col-6">
                                         <p class="nlt-total-rows">
-                                            @if ($with_actions && count($selected_rows) > 0)
+                                            @if ($with_actions && count($selected) > 0)
                                                 {!! trans('nalletje_livewiretables::lt.total-selected-results', [
-                                                    'selected' => count($selected_rows),
+                                                    'selected' => count($selected),
                                                     'from' => $data->firstItem(),
                                                     'to' => $data->lastItem(),
                                                     'total' => $data->total()

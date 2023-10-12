@@ -49,8 +49,6 @@ class LivewireTableComponent extends Component
             'show_filters' => $this->hasFilters() ? $this->show_filters : false,
             'sort_field' => $this->sort_field,
             'sort_dir' => $this->sort_dir,
-            'selected_rows' => $this->hasActions() ? $this->collected : [],
-            'selected_pages' => $this->hasActions() ? $this->collected_pages : [],
             'with_actions' => $this->hasActions(),
             'with_buttons' => $this->hasButtons(),
             'with_filters' => $this->hasFilters(),
@@ -91,7 +89,8 @@ class LivewireTableComponent extends Component
     public function resetLivewireTablePage(): void
     {
         if ($this->hasActions()) {
-            $this->collected = $this->collected_pages = [];
+            $this->selected = [];
+            $this->selectAll = false;
         }
 
         $this->resetPage();

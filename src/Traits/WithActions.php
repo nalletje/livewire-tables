@@ -1,6 +1,7 @@
 <?php
 namespace Nalletje\LivewireTables\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Nalletje\LivewireTables\Contracts\ActionWithFormInterface;
 
@@ -8,40 +9,12 @@ trait WithActions
 {
     public ?string $action = '';
     public ?string $actionWithForm = null;
-    public array $collected = [];
-    public array $collected_pages = [];
-
-    public function addCollected(int $page, string $keys): void
-    {
-        $keys = json_decode($keys, true);
-        $keys = array_map(fn ($v) => (string)$v, $keys);
-
-        if (in_array($page, $this->collected_pages)) {
-            $this->filterPage($page);
-            $this->filterCollected($keys);
-            return;
-        }
-
-        $this->collected_pages[] = $page;
-        $this->collected = array_unique(
-            array_merge($keys, $this->collected)
-        );
-    }
+    public bool $selectAll = false;
+    public array $selected = [];
 
     public function getActions(): array
     {
         return array_filter($this->actions(), fn($a) => $a->auth());
-    }
-
-    public function toggleCollected(int $page, string $key): void
-    {
-        if (in_array($key, $this->collected)) {
-            $this->filterPage($page);
-            $this->filterCollected([$key]);
-            return;
-        }
-
-        $this->collected[] = $key;
     }
 
     public function updatedAction(): void
@@ -63,8 +36,21 @@ trait WithActions
         }
 
         $this->action = '';
-        $this->collected = [];
+        $this->selected = [];
+        $this->selectAll = false;
         $this->resetLivewireTablePage();
+    }
+
+    public function updatedSelected(): void
+    {
+        $this->selected = array_filter($this->selected, fn($val) => $val);
+    }
+
+    public function updatedSelectAll(): void
+    {
+        $this->selected = $this->selectAll
+                ? $this->getPluckedDataCollection()
+                : [];
     }
 
     public function closeActionModal(): void
@@ -95,8 +81,8 @@ trait WithActions
         $this->message_type = $messageObject->type();
 
         $this->closeActionModal();
-        $this->collected = [];
-        $this->collected_pages = [];
+        $this->selected = [];
+        $this->selectAll = false;
     }
 
     protected function getDataCollection(): Collection
@@ -105,17 +91,28 @@ trait WithActions
         $field = $this->getModelKey();
 
         return $this->baseQuery()
-            ->whereIn("$table.$field", $this->collected)
+            ->when($this->selectAll === false, function($query) {
+                $query->whereIn("$table.$field", $this->selected);
+            })
             ->get();
     }
 
-    protected function filterCollected(array $keys): void
+    // TODO : refactor - kind of dupe
+    protected function getPluckedDataCollection(): array
     {
-        $this->collected = array_filter($this->collected, fn ($val) => !in_array($val, $keys));
-    }
+        $table = $this->getModelTable();
+        $field = $this->getModelKey();
 
-    protected function filterPage($page): void
-    {
-        $this->collected_pages = array_filter($this->collected_pages, fn ($val) => $val != $page);
+        $selected = $this->baseQuery()
+            ->when($this->selectAll === false, function($query) {
+                $query->whereIn("$table.$field", $this->selected);
+            })
+            ->pluck("$table.$field")
+            ->toArray();
+
+        $selected = array_flip($selected);
+        $selected = array_fill_keys(array_keys($selected), true);
+
+        return $selected;
     }
 }
