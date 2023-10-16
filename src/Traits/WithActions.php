@@ -49,8 +49,8 @@ trait WithActions
     public function updatedSelectAll(): void
     {
         $this->selected = $this->selectAll
-                ? $this->getPluckedDataCollection()
-                : [];
+            ? $this->getPluckedDataCollection()
+            : [];
     }
 
     public function closeActionModal(): void
@@ -91,7 +91,7 @@ trait WithActions
         $field = $this->getModelKey();
 
         return $this->baseQuery()
-            ->when($this->selectAll === false, function($query) {
+            ->when($this->selectAll === false, function($query) use ($table, $field) {
                 $query->whereIn("$table.$field", $this->selected);
             })
             ->get();
@@ -104,7 +104,7 @@ trait WithActions
         $field = $this->getModelKey();
 
         $selected = $this->baseQuery()
-            ->when($this->selectAll === false, function($query) {
+            ->when($this->selectAll === false, function($query) use ($table, $field) {
                 $query->whereIn("$table.$field", $this->selected);
             })
             ->pluck("$table.$field")
