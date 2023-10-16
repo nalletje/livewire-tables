@@ -115,7 +115,7 @@
         .nlt-pointer {
             cursor: pointer;
         }
-        .nlt-pagination {
+        .nlt-pagination, .nlt-pagination > div {
             float:right;
         }
         .nlt-total-rows {
