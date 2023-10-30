@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait WithData
 {
+    public $paginationOnEachSide = 1; // Maked the pagination smaller/bigger (more pages)
+
     public function baseQuery(): Builder
     {
         if (is_null($this->model)) {
