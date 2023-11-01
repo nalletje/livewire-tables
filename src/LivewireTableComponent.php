@@ -46,7 +46,6 @@ class LivewireTableComponent extends Component
             'per_page_options' => $this->perPageOptions,
             'message' => $this->message,
             'message_type' => $this->message_type,
-            'show_filters' => $this->hasFilters() ? $this->show_filters : false,
             'sort_field' => $this->sort_field,
             'sort_dir' => $this->sort_dir,
             'with_actions' => $this->hasActions(),

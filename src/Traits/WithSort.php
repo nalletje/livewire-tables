@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Url;
 
 trait WithSort
 {
+    #[Url]
     public ?string $sort_field = null;
+
+    #[Url]
     public ?string $sort_dir = null;
 
     public function setColumnSort(string $field): void

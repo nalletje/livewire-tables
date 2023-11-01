@@ -5,14 +5,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait WithFilters
 {
-    protected array $queryStringWithFilters = [
-        'todo_why_cant_i_only_put_show_filters', // TODO: Figure out
-        'show_filters',
-    ];
-
     public array $filter_values = [];
-
-    public bool $show_filters = false;
 
     public function appendFilters(Builder $query): Builder
     {
@@ -40,10 +33,5 @@ trait WithFilters
     {
         $this->resetLivewireTablePage();
         $this->filter_values[$key] = $val === "" ? null : $val;
-    }
-
-    public function toggleShowFilters(): void
-    {
-        $this->show_filters = !$this->show_filters;
     }
 }
