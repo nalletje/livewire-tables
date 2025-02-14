@@ -53,11 +53,19 @@ class Column
         $field = $this->field;
 
         if (Str::contains($field, '.')) {
-            foreach(explode('.', $field) as $field) {
-                $model = $model->$field;
+            $relationModel = $model;
+            $relations = explode('.', $field);
+            $field = array_pop($relations);
+
+            foreach($relations as $relation) {
+                $relationModel = $relationModel->$relation ?? null;
+
+                if (is_null($relationModel)) {
+                    throw new ErrorException("Relation '$relation' not found");
+                }
             }
 
-            $val = $model;
+            $val = $relationModel->$field ?? '-';
         } else {
             $val = $model->$field;
         }
