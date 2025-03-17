@@ -92,9 +92,16 @@ trait WithActions
 
         return $this->baseQuery()
             ->when($this->selectAll === false, function($query) use ($table, $field) {
-                $query->whereIn("$table.$field", $this->selected);
+                $query->whereIn("$table.$field", $this->getSelectedKeys());
             })
             ->get();
+    }
+
+    protected function getSelectedKeys(): array
+    {
+        return array_keys(
+            array_filter($this->selected)
+        );
     }
 
     // TODO : refactor - kind of dupe
@@ -105,7 +112,7 @@ trait WithActions
 
         $selected = $this->baseQuery()
             ->when($this->selectAll === false, function($query) use ($table, $field) {
-                $query->whereIn("$table.$field", $this->selected);
+                $query->whereIn("$table.$field", $this->getSelectedKeys());
             })
             ->pluck("$table.$field")
             ->toArray();
